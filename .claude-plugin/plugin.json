@@ -1,0 +1,9 @@
+{
+  "name": "gg",
+  "description": "Goals, guidelines, and gates — inner-loop verification for Claude Code. Contracts at every handoff: spec → decompose → build → gates → evidence.",
+  "version": "0.1.0",
+  "author": { "name": "Jacquard Labs" },
+  "repository": "https://github.com/jacquardlabs/gg",
+  "license": "MIT",
+  "keywords": ["spec", "gates", "audit", "verification", "workflow", "contracts"]
+}

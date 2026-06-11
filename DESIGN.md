@@ -139,6 +139,10 @@ Steps 7–8 work as a pure practice (a markdown template) long before steward is
 
 **UX decision (decided 2026-06-10):** Auto-triggering skills + `/gg` as explicit fallback. Skills self-select via TRIGGER sections (the superpowers pattern) — the AI pattern-matches from context without the user invoking skills by name. `/gg` is the escape hatch for "I don't know what stage I'm at." TRIGGER sections must cover team vocabulary explicitly ("PM sent me this," "groom this ticket," "is this worth doing," "done?", "ship it") — not just solo-dev phrasing.
 
+**Plugin install (decided 2026-06-10):** Full install via `cp -r /path/to/gg ~/.claude/skills/gg` — copies the plugin root, which includes `skills/`, `commands/`, `agents/`, `hooks/`, and `.claude-plugin/plugin.json`. Skills are namespaced as `gg:` (e.g. `gg:writing-specs`); gate commands install as `/gg:audit`, `/gg:acceptance`, `/gg:spec-review`, `/gg:gg-init`. Hooks are declared in `hooks/hooks.json` using `${CLAUDE_PLUGIN_ROOT}` — no absolute-path editing in settings.json. Manual (skills-only) install remains documented as the fallback for users who want hooks in a different project's settings.json. Design docs in `DESIGN_SYSTEM.md` (not `DESIGN.md`): gg's `DESIGN.md` is this portfolio source-of-truth, not a design system; ux-reviewer and frontend-reviewer read `DESIGN_SYSTEM.md` for design system context.
+
+**gg-init design (decided 2026-06-10):** `gg:gg-init` scaffolds PRODUCT.md (from `templates/product.md`) and the `specs/` directory, and adds a gg workflow section to `.claude/CLAUDE.md`. It does not scaffold `DESIGN.md` or `DESIGN_SYSTEM.md` — design system setup is optional and left to the user. Idempotent: checks each artifact before creating, never overwrites existing content.
+
 ## 6. Step 4 hardening (pressure-test results)
 
 **The finding:** as first specced, step 4's monitors fired on internal states — "scope temptation," "feels contrary to an ADR," "same fix attempted twice." That is agent self-assessment as a *stopping* signal, in a system whose axiom is that agent self-assessment is unreliable. The thesis predicts its own step 4 fails, and fails self-servingly.

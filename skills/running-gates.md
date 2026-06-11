@@ -51,12 +51,12 @@ This step is non-negotiable. A claim written after the gates ran measures nothin
 
 Execute each item in the spec's Verification section in order. Rules:
 
-**Execute literally.** If an item says `run pytest tests/test_auth.py`, run that command. If it says "run `/audit`" or "audit", invoke the `/audit` gate command (see Standard implementations below). If it says "observe behavior X", observe behavior X. No implicit routing — the spec is the source of truth.
+**Execute literally.** If an item says `run pytest tests/test_auth.py`, run that command. If it says "run `/gg:audit`" or "audit", invoke the `/gg:audit` gate command (see Standard implementations below). If it says "observe behavior X", observe behavior X. No implicit routing — the spec is the source of truth.
 
 **Standard named implementations.** Two gate commands are pre-built and recognized by name in any spec's Verification section:
 
-- `/audit` — full parallel audit pass via `architect-reviewer` (coordinates security-auditor, code-auditor, doc-auditor, architect-reviewer, frontend-reviewer, ux-reviewer, product-reviewer). Returns PASS / FIX AND RE-AUDIT / NEEDS DISCUSSION. frontend-reviewer and ux-reviewer are skipped automatically when there are no UI changes. Spawning as a subagent is the correct invocation: the audit findings become proof for this gate item.
-- `/acceptance` — post-implementation product acceptance via `product-reviewer` + implementation walkthrough. Returns SHIP / FIX AND RE-CHECK / HOLD. Run this gate last (after all code gates pass) — the user experience check is meaningless if the code is known broken.
+- `/gg:audit` — full parallel audit pass via `architect-reviewer` (coordinates security-auditor, code-auditor, doc-auditor, architect-reviewer, frontend-reviewer, ux-reviewer, product-reviewer). Returns PASS / FIX AND RE-AUDIT / NEEDS DISCUSSION. frontend-reviewer and ux-reviewer are skipped automatically when there are no UI changes. Spawning as a subagent is the correct invocation: the audit findings become proof for this gate item.
+- `/gg:acceptance` — post-implementation product acceptance via `product-reviewer` + implementation walkthrough. Returns SHIP / FIX AND RE-CHECK / HOLD. Run this gate last (after all code gates pass) — the user experience check is meaningless if the code is known broken.
 
 Route verdicts into the gate report:
 - FIX AND RE-AUDIT / FIX AND RE-CHECK → do NOT fix mid-run; finish the full run, then route each finding to its plan item; re-run only the failed item after fixing.

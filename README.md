@@ -44,7 +44,7 @@ Three rules carry most of the weight:
 | [`DESIGN.md`](DESIGN.md) | The full portfolio design — thesis, workflow, the eight boundary skills, enforcement mechanics, migration plan. Start here. |
 | [`skills/`](skills/) | Eight Claude Code skills, one per boundary: triage, spec, decompose, escalate, gates, harvest, drift, delegate. Plus the [`/gg`](.claude/commands/gg.md) orientation command. |
 | [`agents/`](agents/) | Seven gate agents dispatched by running-gates: security-auditor, code-auditor, doc-auditor, architect-reviewer (coordinator), frontend-reviewer, ux-reviewer, product-reviewer. |
-| [`commands/`](commands/) | Three gate commands: [`/spec-review`](commands/spec-review.md) (independent spec review before decompose), [`/audit`](commands/audit.md) (full parallel audit pass), [`/acceptance`](commands/acceptance.md) (post-implementation product review). |
+| [`commands/`](commands/) | Four gate commands: [`/gg:spec-review`](commands/spec-review.md) (independent spec review before decompose), [`/gg:audit`](commands/audit.md) (full parallel audit pass), [`/gg:acceptance`](commands/acceptance.md) (post-implementation product review), [`/gg:gg-init`](commands/gg-init.md) (scaffold PRODUCT.md and specs layout). |
 | [`hooks/`](hooks/) | Four deterministic hooks: manifest check (PreToolUse), manifest updater (PostToolUse/Write), failure counter (PostToolUse/Bash), session start (SessionStart). |
 | [`templates/`](templates/) | Artifact templates for every boundary: triage, spec, mini-spec, questions, plan, gate report, escalation, drift note, steward read. |
 | [`examples/`](examples/) | One continuous worked example (`06-orchestrator`). A question becomes an architecture rule; a drift check catches its violation; the gate report records the gap between claim and reality. |
@@ -52,9 +52,9 @@ Three rules carry most of the weight:
 
 ## Installing
 
-See [`docs/install.md`](docs/install.md). Two steps: hook settings and skill copy.
+See [`docs/install.md`](docs/install.md). One command: `cp -r /path/to/gg ~/.claude/skills/gg`. Skills, gate commands, and hooks are all wired automatically from the plugin install.
 
-The `/gg` slash command gives orientation at any point — it reads your `specs/` directory, determines what stage the work is at, and routes to the right skill.
+The `/gg` slash command gives orientation at any point — it reads your `specs/` directory, determines what stage the work is at, and routes to the right skill. Run `/gg:gg-init` in a new project to scaffold PRODUCT.md and the `specs/` directory.
 
 ## How it works in practice
 
@@ -62,11 +62,11 @@ The `/gg` slash command gives orientation at any point — it reads your `specs/
 2. **Spec** — first, pick the path: if the change has a single requirement, no interface changes, and no external users affected, use the mini-spec (goal + requirement + verification + non-goals, five lines, proceed directly to build). Otherwise: author the full contract, red-team it (three weakest points), confirm with the human. For full-ceremony specs, run `/spec-review` before handing off — an independent product-reviewer pass that catches what the author is too close to see.
 3. **Decompose** — before any code: questions round-trip (reserved decisions first, ambiguities with explicit defaults), then a plan where every step maps to a requirement. Writing the plan arms the manifest-check hook.
 4. **Build** — the agent owns the middle. Hooks watch for out-of-scope edits, repeated failures, and touched interfaces. Stopping conditions escalate; unblocked plan items continue.
-5. **Gates** — claim recorded first. Execute the spec's verification section literally, proof per item. Two named standard implementations: `/audit` (seven parallel auditors — security, code, docs, architecture, UX, frontend; frontend/UX skipped when no UI changes) and `/acceptance` (post-implementation product review). Traceability section maps every changed file back to a plan item and requirement. Orphan changes are listed, never implied.
+5. **Gates** — claim recorded first. Execute the spec's verification section literally, proof per item. Two named standard implementations: `/gg:audit` (seven parallel auditors — security, code, docs, architecture, UX, frontend; frontend/UX skipped when no UI changes) and `/gg:acceptance` (post-implementation product review). Traceability section maps every changed file back to a plan item and requirement. Orphan changes are listed, never implied.
 6. **Harvest** — route each pain point to its layer: spec, guideline, or hook threshold. One testable sentence per rule. Prune what never fires.
 
 ## Status
 
-Hooks, skills, and gate library are implemented. The install doc is at [`docs/install.md`](docs/install.md). In dogfood — publication is a fall 2026 decision, earned by usage data.
+Hooks, skills, gate library, and plugin manifest are implemented. Install via `cp -r /path/to/gg ~/.claude/skills/gg` — see [`docs/install.md`](docs/install.md). In dogfood — publication is a fall 2026 decision, earned by usage data.
 
 *From [Jacquard Labs](https://github.com/jacquardlabs).*
