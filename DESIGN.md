@@ -183,12 +183,19 @@ Steps 7–8 work as a pure practice (a markdown template) long before steward is
 
 ## 10. Open items (in order)
 
-1. **Artifact formats** — *complete 2026-06-10*: all six templates in `templates/` (`triage.md`, `questions.md`, `escalation.md`, `mini-spec.md`, `gate-report.md`, `drift-note.md`); worked examples in `examples/specs/06-orchestrator/`. Key rules: triage verdict recorded before rationale is written; mini-spec requires Goal/Verification/Non-goals (hook-enforced); gate claim recorded before gates run; escalation `scope`/`blocks` keys power enforcement hooks; drift `trigger` key audits tripwire fidelity.
+1. ~~**Artifact formats**~~ — *complete 2026-06-10*: all six templates in `templates/` (`triage.md`, `questions.md`, `escalation.md`, `mini-spec.md`, `gate-report.md`, `drift-note.md`); worked examples in `examples/specs/06-orchestrator/`. Key rules: triage verdict recorded before rationale is written; mini-spec requires Goal/Verification/Non-goals (hook-enforced); gate claim recorded before gates run; escalation `scope`/`blocks` keys power enforcement hooks; drift `trigger` key audits tripwire fidelity.
 2. ~~**`/gg` front door vs. eight triggers**~~ — decided 2026-06-10: Option C (see §4 UX decision).
 3. ~~**Gate library wiring**~~ — decided 2026-06-10: (a) `running-gates` executes the spec's Verification section literally — no implicit routing; if an item says "run `/audit`", spawn `/audit` as a subagent with a mini-spec; at native folding those implementations absorb into gg. (b) CI-attestation: `attestation: agent | ci` field in the gate-report frontmatter; `ci` means the Action re-ran the commands independently and produced the report. (c) Redaction: `claimed:` is a verbatim assertion only; Proof column is minimum useful excerpt; nothing from conversation history appears anywhere in the report.
-4. **Hook implementation pass** — *complete 2026-06-10*: manifest_check.py (PreToolUse), manifest_updater.py (PostToolUse/Write), failure_counter.py (PostToolUse/Bash), session_start.py (SessionStart); 18 tests passing; docs/install.md. MCP/skills lockfile remains open (gg#3 part 2, separate spike).
+4. ~~**Hook implementation pass**~~ — *complete 2026-06-10*: manifest_check.py (PreToolUse), manifest_updater.py (PostToolUse/Write), failure_counter.py (PostToolUse/Bash), session_start.py (SessionStart); 18 tests passing; docs/install.md. MCP/skills lockfile remains open (gg#3 part 2, separate spike).
 5. ~~**superpowers classification table**~~ — complete 2026-06-10: docs/superpowers-classification.md. 1 replaced (writing-plans), 2 demoted-to-guideline (executing-plans, verification-before-completion), 10 retained, 1 retained-with-overlap (subagent-driven-development). Four CLAUDE.md harvests identified before any disables.
 6. ~~**steward practice template**~~ — complete 2026-06-10: templates/steward-read.md (light and deep cadences, Parts 1–3, gap-score frontmatter key); worked example at examples/steward/2026-06-15-light.md. Reads live in steward/reads/YYYY-MM-DD-<depth>.md.
+7. ~~**Eight boundary skills**~~ — complete 2026-06-10: all eight skills in `skills/`; `/gg` orientation command in `.claude/commands/gg.md`; `tests/test_skill_structure.py`; CLAUDE.md behavioral rules harvested from demoted superpowers skills.
+
+## Next open items
+
+8. **MCP/skills lockfile** (gg#3 part 2): spike to resolve repo-vs-cctx-feature, injection-pattern detection floor, rug-pull blocking UX, and scope (MCP only vs. skills+commands). First milestone: `gg lock` writes hashed manifest; `gg verify` diffs and exits non-zero on drift. Session-start hook does a soft version already; the spike decides whether to harden in-repo or spin separately.
+9. **superpowers migration execution**: four CLAUDE.md harvests done (2026-06-10); next is disabling `executing-plans` and `verification-before-completion` after a two-week observation window. `writing-plans` disabled only after `decomposing-specs` passes solo dogfood retention test. Low-frequency skills (`systematic-debugging`, `writing-skills`) retention-tested with injected drills.
+10. **Solo dogfood sprint**: use gg end-to-end on a real work item; instrument sessions with cctx; run `tending-guidelines` on findings after ≥3 sessions. Validates the PM→dev wedge with real non-users reading artifacts.
 
 ## 11. Reserved for human
 
