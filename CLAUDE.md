@@ -14,3 +14,10 @@ This repo is the home of the **gg + steward** portfolio: gg (the goals-and-guide
 
 - Metaphor names things; it never operates them. Commands, skill names, trigger phrases, file names, and error messages use plain software vocabulary. The loom/Jacquard story is essay material only.
 - Artifacts (questions reports, escalation notes, gate evidence reports, drift notes) must be legible to people who have never heard of gg — recipient-facing, plain English, no suite jargon.
+
+## Behavioral rules
+
+- Review the plan before starting work. Stop on blockers rather than improvising. Mark tasks done one at a time, not in batches.
+- Never claim work is complete, tests pass, or a bug is fixed without running the verification command in this message first.
+- No fixes without root cause investigation first. Hypothesize, then verify, then fix.
+- No production code without a failing test first. Tests define the contract; code satisfies it.
