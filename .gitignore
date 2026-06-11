@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# gg runtime state — session-local, not committed
+.gg/state/
