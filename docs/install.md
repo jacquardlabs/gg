@@ -1,6 +1,11 @@
-# Installing gg hooks
+# Installing gg
 
-One step: add the following block to your project's `.claude/settings.json`.
+Two steps: wire the hooks into your project's settings, and copy the skills
+to your global Claude Code skills directory.
+
+## Step 1 — Hooks
+
+Add the following block to your project's `.claude/settings.json`.
 Replace `/path/to/gg` with the absolute path to where you cloned this repo.
 
 ```json
@@ -50,6 +55,25 @@ Replace `/path/to/gg` with the absolute path to where you cloned this repo.
   }
 }
 ```
+
+## Step 2 — Skills
+
+Copy the gg skills to your global Claude Code skills directory:
+
+```sh
+cp -r /path/to/gg/skills/. ~/.claude/skills/gg/
+```
+
+Claude Code discovers skills in `~/.claude/skills/` automatically. After
+copying, the skills are available in any Claude Code session.
+
+To update skills after pulling a new version of gg:
+
+```sh
+cp -r /path/to/gg/skills/. ~/.claude/skills/gg/
+```
+
+---
 
 ## Verifying installation
 
