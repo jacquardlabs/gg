@@ -1,0 +1,17 @@
+{
+  "name": "gg",
+  "owner": {
+    "name": "Jacquard Labs"
+  },
+  "plugins": [
+    {
+      "name": "gg",
+      "source": ".",
+      "description": "Goals, guidelines, and gates — inner-loop verification for Claude Code. Contracts at every handoff: spec → decompose → build → gates → evidence.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Jacquard Labs"
+      }
+    }
+  ]
+}

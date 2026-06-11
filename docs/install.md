@@ -1,8 +1,17 @@
 # Installing gg
 
-## Plugin install (recommended)
+## From GitHub (marketplace install)
 
-Copy the full gg repo to your global Claude Code skills directory:
+```
+/plugin marketplace add jacquardlabs/gg
+/plugin install gg@gg
+```
+
+This registers the gg repo as a plugin marketplace and installs the `gg` plugin. Skills namespace as `gg:*`, gate commands as `/gg:*`, and hooks are auto-wired.
+
+## Local install (skills-dir copy)
+
+If you have a local clone, copy the repo to your global Claude Code skills directory:
 
 ```sh
 cp -r /path/to/gg ~/.claude/skills/gg
