@@ -5,3 +5,6 @@ __pycache__/
 
 # gg runtime state — session-local, not committed
 .gg/state/
+
+# local Claude Code settings (machine-specific)
+.claude/settings.local.json
