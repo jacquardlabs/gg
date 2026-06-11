@@ -44,11 +44,11 @@ Three rules carry most of the weight:
 | [`DESIGN.md`](DESIGN.md) | The full portfolio design — thesis, workflow, the eight boundary skills, enforcement mechanics, migration plan. Start here. |
 | [`skills/`](skills/) | Eight Claude Code skills, one per boundary: triage, spec, decompose, escalate, gates, harvest, drift, delegate. Plus the [`/gg`](.claude/commands/gg.md) orientation command. |
 | [`agents/`](agents/) | Seven gate agents dispatched by running-gates: security-auditor, code-auditor, doc-auditor, architect-reviewer (coordinator), frontend-reviewer, ux-reviewer, product-reviewer. |
-| [`commands/`](commands/) | Four gate commands: [`/gg:spec-review`](commands/spec-review.md) (independent spec review before decompose), [`/gg:audit`](commands/audit.md) (full parallel audit pass), [`/gg:acceptance`](commands/acceptance.md) (post-implementation product review), [`/gg:gg-init`](commands/gg-init.md) (scaffold PRODUCT.md and specs layout). |
+| [`commands/`](commands/) | Four gate commands: [`/gg:gg-init`](commands/gg-init.md) (scaffold PRODUCT.md and specs/), [`/gg:spec-review`](commands/spec-review.md) (independent spec review before decompose), [`/gg:audit`](commands/audit.md) (full parallel audit pass), [`/gg:acceptance`](commands/acceptance.md) (post-implementation product review). |
 | [`hooks/`](hooks/) | Four deterministic hooks: manifest check (PreToolUse), manifest updater (PostToolUse/Write), failure counter (PostToolUse/Bash), session start (SessionStart). |
-| [`templates/`](templates/) | Artifact templates for every boundary: triage, spec, mini-spec, questions, plan, gate report, escalation, drift note, steward read. |
+| [`templates/`](templates/) | Artifact templates for every boundary: triage, spec, mini-spec, questions, plan, gate report, escalation, drift note, steward read. Plus [`product.md`](templates/product.md) — the PRODUCT.md scaffold. |
 | [`examples/`](examples/) | One continuous worked example (`06-orchestrator`). A question becomes an architecture rule; a drift check catches its violation; the gate report records the gap between claim and reality. |
-| [`docs/install.md`](docs/install.md) | Install: wire the hooks into `.claude/settings.json`, copy skills to `~/.claude/skills/gg/`. |
+| [`docs/install.md`](docs/install.md) | Install: one command (`cp -r /path/to/gg ~/.claude/skills/gg`). Skills, commands, and hooks all wired automatically. |
 
 ## Installing
 
@@ -58,8 +58,9 @@ The `/gg` slash command gives orientation at any point — it reads your `specs/
 
 ## How it works in practice
 
+0. **Init** — new project? Run `/gg:gg-init` to scaffold PRODUCT.md and `specs/`. Fill in PRODUCT.md before the first spec-review or acceptance gate — product-reviewer reads it to ground every judgment.
 1. **Triage** — ticket arrives; evaluate against product context. Verdict before rationale: BUILD / BUILD-SMALLER / REFRAME / DEFER / DON'T-BUILD.
-2. **Spec** — first, pick the path: if the change has a single requirement, no interface changes, and no external users affected, use the mini-spec (goal + requirement + verification + non-goals, five lines, proceed directly to build). Otherwise: author the full contract, red-team it (three weakest points), confirm with the human. For full-ceremony specs, run `/spec-review` before handing off — an independent product-reviewer pass that catches what the author is too close to see.
+2. **Spec** — first, pick the path: if the change has a single requirement, no interface changes, and no external users affected, use the mini-spec (goal + requirement + verification + non-goals, five lines, proceed directly to build). Otherwise: author the full contract, red-team it (three weakest points), confirm with the human. For full-ceremony specs, run `/gg:spec-review` before handing off — an independent product-reviewer pass that catches what the author is too close to see.
 3. **Decompose** — before any code: questions round-trip (reserved decisions first, ambiguities with explicit defaults), then a plan where every step maps to a requirement. Writing the plan arms the manifest-check hook.
 4. **Build** — the agent owns the middle. Hooks watch for out-of-scope edits, repeated failures, and touched interfaces. Stopping conditions escalate; unblocked plan items continue.
 5. **Gates** — claim recorded first. Execute the spec's verification section literally, proof per item. Two named standard implementations: `/gg:audit` (seven parallel auditors — security, code, docs, architecture, UX, frontend; frontend/UX skipped when no UI changes) and `/gg:acceptance` (post-implementation product review). Traceability section maps every changed file back to a plan item and requirement. Orphan changes are listed, never implied.
