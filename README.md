@@ -52,9 +52,9 @@ Three rules carry most of the weight:
 
 ## Installing
 
-See [`docs/install.md`](docs/install.md). One command: `cp -r /path/to/gg ~/.claude/skills/gg`. Skills, gate commands, and hooks are all wired automatically from the plugin install.
+See [`docs/install.md`](docs/install.md). Two paths: marketplace install (`/plugin marketplace add jacquardlabs/gg` + `/plugin install gg@gg`) gives `gg:*` namespacing; local copy (`cp -r /path/to/gg ~/.claude/skills/gg`) loads flat names. Both wire hooks automatically.
 
-The `/gg` slash command gives orientation at any point — it reads your `specs/` directory, determines what stage the work is at, and routes to the right skill. Run `/gg:gg-init` in a new project to scaffold PRODUCT.md and the `specs/` directory.
+The `/gg` slash command gives orientation at any point — it reads your `specs/` directory, determines what stage the work is at, and routes to the right skill. Run `/gg:gg-init` (or `/gg-init` with local install) in a new project to scaffold PRODUCT.md and the `specs/` directory.
 
 ## How it works in practice
 
