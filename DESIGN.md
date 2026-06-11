@@ -30,7 +30,7 @@ One epistemic claim runs through both: **at agent speed, self-assessment fails.*
 
 ## 3. Naming (decided)
 
-- **gg** — the plugin. From "goals & guidelines," the methodology itself; the expansion teaches the concept. Two keystrokes for the thing typed at every handoff. Free tagline: *it's not done until gg says gg.* Never ship a bare `gg` shell binary (PyPI `gg`, gg-scm, gg2 exist); the name lives as plugin namespace and slash command.
+- **gg** — the plugin. From "goals, guidelines, and gates" — the three questions every piece of work answers: what are we building, how do we stay on track, and how do we know it's correct. Two keystrokes for the thing typed at every handoff. Free tagline: *it's not done until gg says gg.* Never ship a bare `gg` shell binary (PyPI `gg`, gg-scm, gg2 exist); the name lives as plugin namespace and slash command.
 - **steward** — the outer-loop tool, formerly "Eddy." Names the staff/principal/architect posture; joins existing discourse ("stewardship over ownership," Foundation for Public Code's "codebase stewardship") with no product squatting on the word (nearest neighbor: Scala Steward, a dependency bot). Runners-up, recorded for posterity: reckon (dead reckoning — keep as a possible framework-essay frame), bearings, perch.
 - **warp is dead** — warp.dev is "The Agentic Development Environment," same niche, 700K+ users. Disqualifying collision.
 - **jaqal archives** with a pointer: "jaqal evolved into gg." Single-digit external users; migration note suffices. Its gates are absorbed (see §5); its pipeline framing retires.
@@ -181,15 +181,6 @@ Steps 7–8 work as a pure practice (a markdown template) long before steward is
 - **jaqal:** freeze now (no features, no announcement); `running-gates` wraps its gate commands during dogfood; fold natively at merge; archive with pointer at gg's publish.
 - **Evidence:** summer 2026 solo dogfood validates dev→agent; deployment at Bryan's work validates PM→dev (wedge: should-we-build triage on incoming tickets — most self-contained skill, zero team buy-in needed, artifacts get read by real non-users). Publication decisions (~fall) are earned by this data, not scheduled.
 
-## 10. Open items (in order)
-
-1. **Artifact formats** — *complete 2026-06-10*: all six templates in `templates/` (`triage.md`, `questions.md`, `escalation.md`, `mini-spec.md`, `gate-report.md`, `drift-note.md`); worked examples in `examples/specs/06-orchestrator/`. Key rules: triage verdict recorded before rationale is written; mini-spec requires Goal/Verification/Non-goals (hook-enforced); gate claim recorded before gates run; escalation `scope`/`blocks` keys power enforcement hooks; drift `trigger` key audits tripwire fidelity.
-2. ~~**`/gg` front door vs. eight triggers**~~ — decided 2026-06-10: Option C (see §4 UX decision).
-3. ~~**Gate library wiring**~~ — decided 2026-06-10: (a) `running-gates` executes the spec's Verification section literally — no implicit routing; if an item says "run `/audit`", spawn `/audit` as a subagent with a mini-spec; at native folding those implementations absorb into gg. (b) CI-attestation: `attestation: agent | ci` field in the gate-report frontmatter; `ci` means the Action re-ran the commands independently and produced the report. (c) Redaction: `claimed:` is a verbatim assertion only; Proof column is minimum useful excerpt; nothing from conversation history appears anywhere in the report.
-4. **Hook implementation pass** — *complete 2026-06-10*: manifest_check.py (PreToolUse), manifest_updater.py (PostToolUse/Write), failure_counter.py (PostToolUse/Bash), session_start.py (SessionStart); 18 tests passing; docs/install.md. MCP/skills lockfile remains open (gg#3 part 2, separate spike).
-5. ~~**superpowers classification table**~~ — complete 2026-06-10: docs/superpowers-classification.md. 1 replaced (writing-plans), 2 demoted-to-guideline (executing-plans, verification-before-completion), 10 retained, 1 retained-with-overlap (subagent-driven-development). Four CLAUDE.md harvests identified before any disables.
-6. ~~**steward practice template**~~ — complete 2026-06-10: templates/steward-read.md (light and deep cadences, Parts 1–3, gap-score frontmatter key); worked example at examples/steward/2026-06-15-light.md. Reads live in steward/reads/YYYY-MM-DD-<depth>.md.
-
-## 11. Reserved for human
+## 10. Reserved for human
 
 Publish/no-publish and timing for gg (fall, evidence-dependent); steward framework publication (after reading program); attaching Bryan's name to steward's README; retiring any superpowers skill; the membership-test verdict on any proposed ninth skill; jaqal archive announcement wording.

@@ -1,6 +1,6 @@
 # gg
 
-This repo is the home of the **gg + steward** portfolio: gg (the goals-and-guidelines Claude Code plugin, inner loop) and steward (the staff+ sensemaking practice/tool, outer loop).
+This repo is the home of the **gg + steward** portfolio: gg (goals, guidelines, and gates — the Claude Code plugin, inner loop) and steward (the staff+ sensemaking practice/tool, outer loop).
 
 **`DESIGN.md` is the source of truth** for all portfolio decisions — layering, naming, workflow, standing rules, open items. Read it before designing anything; record new decisions in it, not in conversation.
 
