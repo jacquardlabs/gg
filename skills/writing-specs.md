@@ -166,7 +166,7 @@ If the human requests changes: make them, re-run the red-team pass, and re-prese
 
 Once confirmed: the spec is frozen from the agent's perspective.
 
-**Spec-review gate (recommended before decompose).** For full-ceremony specs (multiple requirements, any interface changes, or external users affected), run `/spec-review` now. It runs product-reviewer independently against the spec — the author's red-team and the independent review are different passes. Verdict REVISE loops back here to update and re-confirm; verdict RETHINK routes back to triage; verdict PROCEED TO PLAN clears the spec for decompose. Skip spec-review on the mini-spec path (below-threshold changes) when no PRODUCT.md exists or when the human explicitly waives it.
+**Spec-review gate (recommended before decompose).** For full-ceremony specs (multiple requirements, any interface changes, or external users affected), run `/gg:spec-review` now. It runs product-reviewer independently against the spec — the author's red-team and the independent review are different passes. Verdict REVISE loops back here to update and re-confirm; verdict RETHINK routes back to triage; verdict PROCEED TO PLAN clears the spec for decompose. Skip spec-review on the mini-spec path (below-threshold changes) when no PRODUCT.md exists or when the human explicitly waives it.
 
 ---
 
