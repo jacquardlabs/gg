@@ -30,6 +30,10 @@ Do NOT trigger if a plan with a manifest already exists and the questions are an
 
 Goal: produce a `questions.md` the human can answer by number, then wait for answers before writing a single line of code.
 
+### Step 0: Check for spec-review
+
+Read `specs/<NN>-<slug>/spec-review.md` if it exists. A PROCEED TO PLAN verdict means the spec cleared independent review — proceed. If it's absent, note it: "spec-review not run — skipping is valid for below-threshold changes; flag if this is a full-ceremony spec." Do not block.
+
 ### Step 1: Read the spec completely
 
 Read `specs/<NN>-<slug>/spec.md` from top to bottom before forming any questions. Also read:

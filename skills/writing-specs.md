@@ -80,6 +80,39 @@ Only reached after a BUILD or BUILD-SMALLER verdict is confirmed.
 
 Goal: produce a spec the human owns, every requirement paired with a gate, that an agent can execute without ambiguity. The spec is the human's contract — it is not revisable by the agent.
 
+### Path determination (do this first)
+
+**Full-ceremony path** applies when any of the following are true:
+- The spec has more than one requirement
+- Any interface changes (public functions, API endpoints, data schemas, file paths)
+- External users are affected
+
+**Mini-spec path** applies when none of the above are true — a single-requirement change with no interface impact and no external users affected. The mini-spec omits the questions round-trip, the red-team pass, and the full plan; gates are a spot check.
+
+**The path choice is always recorded.** State it in the spec frontmatter (`path: full` or `path: mini`) and in one line at the top of the body. Silent downgrade is not permitted — it defeats the traceability section.
+
+---
+
+### Mini-spec path (below-threshold changes)
+
+If the mini-spec path applies, skip to this section. Skip Steps 1–4 below.
+
+Write `specs/<NN>-<slug>/spec.md` with five lines:
+
+```
+Goal: <one sentence — what the work produces and for whom>
+Requirement: <one requirement>
+Verification: <exact gate that proves the requirement met>
+Non-goals: <what this explicitly does not do>
+Path: mini-spec
+```
+
+Present to the human; wait for confirmation. No questions round-trip. No red-team pass. No spec-review gate.
+
+Proceed directly to build. Plan is a single-item list in the agent's working notes, not a `plan.md` file. Gates are a spot check: run only the one Verification gate, record the result, attach as the gate evidence.
+
+---
+
 ### Step 1: Collect requirements
 
 Ask for any requirements not already clear from the ticket. One round of questions is fine; this is not a design session. If the requirements are already clear, skip to Step 2.
@@ -131,7 +164,9 @@ Present the spec to the human. Wait for explicit confirmation before this skill 
 
 If the human requests changes: make them, re-run the red-team pass, and re-present. Repeat until the human confirms.
 
-Once confirmed: the spec is frozen from the agent's perspective. It travels to `decomposing-specs` unchanged.
+Once confirmed: the spec is frozen from the agent's perspective.
+
+**Spec-review gate (recommended before decompose).** For full-ceremony specs (multiple requirements, any interface changes, or external users affected), run `/spec-review` now. It runs product-reviewer independently against the spec — the author's red-team and the independent review are different passes. Verdict REVISE loops back here to update and re-confirm; verdict RETHINK routes back to triage; verdict PROCEED TO PLAN clears the spec for decompose. Skip spec-review on the mini-spec path (below-threshold changes) when no PRODUCT.md exists or when the human explicitly waives it.
 
 ---
 
@@ -154,3 +189,4 @@ Both artifacts go in git. The triage verdict is the PM's answer; the spec is the
 - Reserved decisions propagate — they are never absorbed by the agent or a sub-delegation.
 - The red-team pass is not optional and is not a summary of the spec. It names specific failure modes.
 - Plain English throughout. The recipient of the triage artifact has never heard of gg.
+- Path choice is always recorded. Mini-spec path for below-threshold changes; full ceremony for everything else. No silent downgrade.
