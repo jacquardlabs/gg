@@ -33,7 +33,7 @@ One epistemic claim runs through both: **at agent speed, self-assessment fails.*
 - **gg** — the plugin. From "goals, guidelines, and gates" — the three questions every piece of work answers: what are we building, how do we stay on track, and how do we know it's correct. Two keystrokes for the thing typed at every handoff. Free tagline: *it's not done until gg says gg.* Never ship a bare `gg` shell binary (PyPI `gg`, gg-scm, gg2 exist); the name lives as plugin namespace and slash command.
 - **steward** — the outer-loop tool, formerly "Eddy." Names the staff/principal/architect posture; joins existing discourse ("stewardship over ownership," Foundation for Public Code's "codebase stewardship") with no product squatting on the word (nearest neighbor: Scala Steward, a dependency bot). Runners-up, recorded for posterity: reckon (dead reckoning — keep as a possible framework-essay frame), bearings, perch.
 - **warp is dead** — warp.dev is "The Agentic Development Environment," same niche, 700K+ users. Disqualifying collision.
-- **jaqal archives** with a pointer: "jaqal evolved into gg." Single-digit external users; migration note suffices. Its gates are absorbed (see §5); its pipeline framing retires.
+- **jaqal unbundles** into gg and steward, and archives with a pointer at publication. Its feature gates and gate-agent library absorb into gg (§4); its periodic-health commands (deep-review, review-\*, metrics dashboard) and the four periodic-health agents absorb into steward as v0 practice material (§7). Its pipeline framing retires. Single-digit external users; a migration note in the archive README suffices.
 - **Jacquard Labs** remains the org-level narrative brand. The loom story (automation moved the craft to the boundaries; punch cards became computing) is essay material, never operational vocabulary.
 
 **Vocabulary guideline:** *Metaphor names things; it never operates them.* Every command, skill name, trigger phrase, file name, and error message uses plain software vocabulary. A metaphor term may never be the only name for a thing. Test: a user who skipped the README's framing can still use everything.
@@ -69,7 +69,25 @@ Misfiled knowledge is the failure mode; `tending-guidelines` enforces the taxono
 
 ### Gate library
 
-jaqal's gates become the verification implementations `running-gates` executes: audit, acceptance, design-review, plus test/eval invocations. During dogfood, `running-gates` wraps the existing jaqal commands unmodified; native folding happens at merge time.
+gg pulls three named gate implementations from jaqal:
+
+- **spec-review** (from `gate-design-review`) — an independent product-reviewer pass on the spec before decompose, grounding every judgment in PRODUCT.md personas and journeys. Position: between SPEC and DECOMPOSE; purpose: catch scope, persona mismatch, and simplest-version gaps the author is too close to see. Verdict: PROCEED / REVISE / RETHINK.
+- **audit** (from `audit`) — up to seven parallel auditors (security, code, docs, architecture, UX, frontend, accessibility; frontend/UX auto-skipped when no UI changes). Each auditor is lane-disciplined: a given dimension is owned by one auditor; the others are silent on it. Compiled report: critical / important / minor. Verdict: PASS / FIX AND RE-AUDIT / NEEDS DISCUSSION.
+- **acceptance** (from `gate-acceptance`) — post-implementation product review: experience check, error states, journey regression, first-time-user test, "one complaint." Verdict: SHIP / FIX AND RE-CHECK / HOLD.
+
+**Gate-agent library:** jaqal's `agents/` directory is split. gg vendors seven gate agents: security-auditor, code-auditor, doc-auditor, architect-reviewer, frontend-reviewer, ux-reviewer, product-reviewer. **One strip on import:** architect-reviewer's fix-iterate loop (the supervisor pattern that edits code mid-review) is removed — it contaminates the claimed-vs-verified delta that is gg's core claim. Architecture review in gg is read-only: find, record, route. steward vendors four periodic-health agents: review-codebase-health, review-frontend-health, review-architecture, review-product-health.
+
+**fix-planner** (generates FIXES.md from audit findings) has no caller once the fix-iterate loop is stripped. It is not vendored.
+
+During M3 dogfood, `running-gates` may invoke jaqal's gate commands directly where they haven't been natively absorbed. Each native absorption closes the wrapper.
+
+### Proportionality
+
+Full ceremony (spec → spec-review → decompose → build → gates) fits a feature or significant fix. Below the threshold it's friction that gets gg uninstalled.
+
+The **small-change path**: a mini-spec (goal, one-line verification, non-goals — five lines max), no questions round-trip, no plan document, gates as a spot check rather than a full pass.
+
+Threshold signals that invoke full ceremony: the spec has more than one requirement, any interface changes, or external users are affected. Everything else may use the mini-spec path. **The path choice is always recorded.** Using the mini-spec path is noted at the decompose step; silent downgrade is not permitted — it defeats the traceability section.
 
 ### Team story: single-player software, multiplayer artifacts
 
@@ -163,6 +181,7 @@ Steps 7–8 work as a pure practice (a markdown template) long before steward is
 - **Differentiation is judgment and drift, not knowledge capture.** The memory corner is crowded (getlore.tech, get-lore.com, GitLab "LORE" — found 2026-06-09); the existing-tool landscape evaluation in the brief should note this.
 - Writing-first: framework document gated on the reading program; evidence caveats from the brief stand (METR perception gap yes, "19% slower" no; GitClear vs. DORA — state both).
 - gg artifacts are designed with steward as second reader: drift-note format stable and dated; gate reports carry claimed-vs-verified deltas; guideline changelog is organizational-memory-formation data.
+- **jaqal's periodic-review half is steward's v0 practice material.** `deep-review` and the four `review-*` commands implement the outer-loop shape gg artifacts feed: dated reports committed per-run, a metrics dashboard with trend-vs-last-review, cross-referenced findings across dimensions, and propose-don't-apply doc updates. The one inversion steward adds: the human writes their unaided read *first*, then the tool presents findings — jaqal leads with the AI's framing, which steward's perception-gap discipline forbids.
 
 ## 8. Standing rules (portfolio-wide)
 
@@ -174,11 +193,12 @@ Steps 7–8 work as a pure practice (a markdown template) long before steward is
 6. The spec is the human's contract; the plan is the agent's artifact.
 7. Reserved decisions propagate; they are never absorbed downstream.
 8. If it needs a server, it's post-1.0.
+9. Proportionality: mini-spec path is valid for below-threshold changes; the path choice is always recorded, never silent.
 
 ## 9. Migration & evidence plan
 
 - **superpowers:** nothing deleted on faith. Each gg skill enters rotation after passing skill-creator's eval loop; its counterpart is disabled two weeks; cctx data decides. Caveat recorded: low-frequency/high-consequence skills (escalating) will look dead in usage counts — a fire alarm that never rang isn't useless; retention-test them with injected drills (deliberately ambiguous specs), not usage counts. Before migration starts, produce the one-page table classifying every superpowers skill: replaced-by-gg / demoted-to-guideline / retired-outright / no-counterpart.
-- **jaqal:** freeze now (no features, no announcement); `running-gates` wraps its gate commands during dogfood; fold natively at merge; archive with pointer at gg's publish.
+- **jaqal:** freeze now (no features, no announcement). At publication: archive with "unbundled into gg and steward" pointer. Its feature gates and gate-agent library (seven gate agents) absorb into gg (M1); its periodic-health commands absorb into steward practice (M3+). Dogfood wraps jaqal commands directly where they haven't been absorbed yet; each native absorption closes the wrapper.
 - **Evidence:** summer 2026 solo dogfood validates dev→agent; deployment at Bryan's work validates PM→dev (wedge: should-we-build triage on incoming tickets — most self-contained skill, zero team buy-in needed, artifacts get read by real non-users). Publication decisions (~fall) are earned by this data, not scheduled.
 
 ## 10. Reserved for human
