@@ -4,6 +4,7 @@ spec: <NN>-<slug>
 date: <YYYY-MM-DD>
 claimed: <done | partial>     # the agent's claim, recorded BEFORE gates run
 verdict: <pass | fail>        # what the gates found
+attestation: <agent | ci>     # agent = generated during session; ci = Action re-ran commands independently
 ---
 # Gate run
 
@@ -14,6 +15,16 @@ verbatim>"
 Sequencing rule: capture the claim BEFORE executing any verification item.
 The claimed/verdict pair, aggregated over time, is the perception-gap
 dataset. A claim written after the gates ran measures nothing.
+
+Redaction rules (this report is safe to attach to a PR):
+- `claimed:` is a verbatim assertion only — no surrounding conversation context.
+- Proof column: minimum useful excerpt (the specific failure message or
+  assertion). Not full output, not stack traces, not session content.
+- Nothing in any field is drawn from conversation history.
+
+Gate execution: running-gates executes the Verification section literally.
+If an item says "run /audit", spawn /audit. If it says "run pytest", run
+pytest. No implicit routing — the spec is the source of truth.
 -->
 
 ## Verification items
