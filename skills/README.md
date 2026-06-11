@@ -16,4 +16,4 @@ Install to `~/.claude/skills/gg/` (see `../docs/install.md`).
 | `checking-drift` | milestone, large refactor, ADR touch | drift note |
 | `delegating-with-specs` | spawning a subagent | mini-spec; verified on return |
 
-Skills 2–8 are not yet written. `writing-specs` is the work wedge.
+Skills 3–8 are not yet written. `writing-specs` and `decomposing-specs` are done.
